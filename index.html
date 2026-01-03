@@ -47,8 +47,8 @@
       max-width: 1100px;
       margin: 0 auto;
       padding: 20px;
-      padding-bottom: 80px;
-      /* Space for bottom nav */
+      /* Padding bawah ekstra agar tidak tertutup nav bar */
+      padding-bottom: 100px; 
     }
 
     input,
@@ -126,20 +126,9 @@
     }
 
     @keyframes pulseLogo {
-      0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7);
-      }
-
-      70% {
-        transform: scale(1.05);
-        box-shadow: 0 0 0 20px rgba(139, 92, 246, 0);
-      }
-
-      100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
-      }
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(139, 92, 246, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
     }
 
     /* --- 2. PIN SCREEN --- */
@@ -176,11 +165,7 @@
       border: 3px solid #8b5cf6;
     }
 
-    .pin-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .pin-logo img { width: 100%; height: 100%; object-fit: cover; }
 
     #pinError {
       color: #e11d48;
@@ -189,30 +174,13 @@
       display: none;
     }
 
-    .shake {
-      animation: shake 0.5s;
-    }
-
+    .shake { animation: shake 0.5s; }
     @keyframes shake {
-      0% {
-        transform: translateX(0);
-      }
-
-      25% {
-        transform: translateX(-10px);
-      }
-
-      50% {
-        transform: translateX(10px);
-      }
-
-      75% {
-        transform: translateX(-10px);
-      }
-
-      100% {
-        transform: translateX(0);
-      }
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+      100% { transform: translateX(0); }
     }
 
     /* --- 3. MAIN APP STYLES --- */
@@ -225,6 +193,8 @@
       padding: 15px 25px;
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow-soft);
+      flex-wrap: wrap; /* Agar responsif saat layar sangat kecil */
+      gap: 15px;
     }
 
     .profile-container {
@@ -242,16 +212,16 @@
       flex-shrink: 0;
     }
 
-    .profile-logo-small img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .profile-logo-small img { width: 100%; height: 100%; object-fit: cover; }
 
     .profile-name {
       font-weight: 700;
       font-size: 1.2rem;
       color: var(--text-dark);
+    }
+
+    .app-title-container {
+      text-align: right;
     }
 
     .app-title-container h1 {
@@ -260,7 +230,6 @@
       background: var(--primary-grad);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-align: right;
     }
 
     .status-indicator {
@@ -280,15 +249,13 @@
       border-radius: 50%;
     }
 
-    .status-online {
-      background: #10b981;
-      box-shadow: 0 0 10px #10b981;
-    }
+    .status-online { background: #10b981; box-shadow: 0 0 10px #10b981; }
 
     /* Dashboard Components */
     .summary-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      /* Responsif: Otomatis menyesuaikan jumlah kolom */
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
       margin-bottom: 30px;
     }
@@ -323,21 +290,13 @@
       margin: 10px 0 0;
       font-size: 26px;
       font-weight: 700;
+      /* Agar angka panjang tidak keluar kotak di HP kecil */
+      word-wrap: break-word; 
     }
 
-    .card-balance .amount {
-      background: var(--primary-grad);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .card-in .amount {
-      color: #10b981;
-    }
-
-    .card-out .amount {
-      color: #f43f5e;
-    }
+    .card-balance .amount { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .card-in .amount { color: #10b981; }
+    .card-out .amount { color: #f43f5e; }
 
     .main-content-grid {
       display: grid;
@@ -346,10 +305,24 @@
       margin-bottom: 30px;
     }
 
+    /* Media Query untuk Tablet/HP */
     @media (max-width: 900px) {
       .main-content-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Tumpuk ke bawah */
       }
+      .header-section {
+        padding: 15px;
+      }
+    }
+
+    /* Media Query khusus HP Kecil */
+    @media (max-width: 480px) {
+      .container { padding: 15px; padding-bottom: 90px; }
+      .header-section { flex-direction: row; justify-content: space-between; }
+      .profile-name { display: none; /* Sembunyikan nama jika layar terlalu sempit */ }
+      .summary-grid { grid-template-columns: 1fr; /* 1 kolom penuh di HP */ }
+      .report-filters { flex-direction: column; } /* Filter bulan/tahun tumpuk */
+      .report-result-grid { grid-template-columns: 1fr; }
     }
 
     .content-box {
@@ -371,16 +344,8 @@
       gap: 10px;
     }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 500;
-      font-size: 13px;
-    }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 13px; }
 
     /* Table Styles */
     table {
@@ -396,6 +361,7 @@
       font-size: 12px;
       padding: 0 15px;
       text-transform: uppercase;
+      white-space: nowrap; /* Agar header tidak turun baris */
     }
 
     tbody tr {
@@ -411,16 +377,8 @@
       vertical-align: middle;
     }
 
-    td:first-child {
-      border-top-left-radius: 12px;
-      border-bottom-left-radius: 12px;
-    }
-
-    td:last-child {
-      border-top-right-radius: 12px;
-      border-bottom-right-radius: 12px;
-      text-align: right;
-    }
+    td:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+    td:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; text-align: right; }
 
     .badge-modern {
       padding: 4px 10px;
@@ -430,17 +388,11 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      white-space: nowrap;
     }
 
-    .badge-in {
-      background: #ecfdf5;
-      color: #059669;
-    }
-
-    .badge-out {
-      background: #fff1f2;
-      color: #e11d48;
-    }
+    .badge-in { background: #ecfdf5; color: #059669; }
+    .badge-out { background: #fff1f2; color: #e11d48; }
 
     .btn-delete-icon {
       background: #fee2e2;
@@ -456,19 +408,13 @@
     }
 
     .loading-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(255, 255, 255, 0.8);
       display: none;
-      justify-content: center;
-      align-items: center;
+      justify-content: center; align-items: center;
       z-index: 10;
       border-radius: var(--radius-xl);
-      font-weight: 600;
-      color: #6366f1;
+      font-weight: 600; color: #6366f1;
     }
 
     /* --- BOTTOM NAVIGATION --- */
@@ -485,6 +431,8 @@
       z-index: 100;
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
+      /* Agar aman di iPhone (area home bar) */
+      padding-bottom: calc(15px + env(safe-area-inset-bottom)); 
     }
 
     .nav-item {
@@ -495,20 +443,9 @@
       flex: 1;
     }
 
-    .nav-item i {
-      font-size: 20px;
-      margin-bottom: 5px;
-      display: block;
-    }
-
-    .nav-item span {
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .nav-item.active {
-      color: #8b5cf6;
-    }
+    .nav-item i { font-size: 20px; margin-bottom: 5px; display: block; }
+    .nav-item span { font-size: 12px; font-weight: 500; }
+    .nav-item.active { color: #8b5cf6; }
 
     /* --- REPORT SECTION STYLES --- */
     .report-filters {
@@ -532,17 +469,9 @@
       border: 1px solid #e2e8f0;
     }
 
-    .report-card h4 {
-      margin: 0 0 10px 0;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
+    .report-card h4 { margin: 0 0 10px 0; font-size: 14px; color: var(--text-muted); }
+    .report-card p { margin: 0; font-size: 20px; font-weight: 700; word-wrap: break-word; }
 
-    .report-card p {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 700;
-    }
   </style>
 </head>
 
